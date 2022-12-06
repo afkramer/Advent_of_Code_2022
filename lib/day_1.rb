@@ -2,6 +2,8 @@
 
 require_relative 'read_input'
 
+require 'debug'
+
 class Day1
   include ReadInput
 
@@ -11,24 +13,38 @@ class Day1
 
   def part_one(input)
     max_sum = 0
-    elf_number = 0
     curr_sum = 0
-    curr_number = 1
     input.each do |line|
       curr_sum += line.to_i if line != ''
 
       unless line != ''
         if curr_sum > max_sum
           max_sum = curr_sum
-          elf_number = curr_number
         end
-        curr_number += 1
         curr_sum = 0
       end
     end
     max_sum
   end
+
+  def part_two(input)
+    top_three = [0, 0, 0]
+    curr_sum = 0
+    input.each_with_index do |line, ind|
+      curr_sum += line.to_i if line != ''
+
+      if line == '' || ind == input.length - 1
+        if curr_sum > top_three.min
+          top_three.pop
+          top_three.push(curr_sum)
+          top_three.sort!.reverse!
+        end
+        curr_sum = 0
+      end
+    end
+    top_three.sum
+  end
 end
 
 day1 = Day1.new
-puts day1.part_one(day1.get_lines)
+puts day1.part_two(day1.get_lines)
