@@ -28,5 +28,19 @@ class Day3
   end
 
   def part_two
+    total = 0
+    inputs = parse_input('./inputs/day_3.txt')
+    tuple_array = []
+    inputs.each_slice(3) { |tuple| tuple_array.push(tuple) }
+    tuple_array.each do |tuple|
+      common_letter = tuple[0].split('').intersection(tuple[1].split('')).intersection(tuple[2].split(''))
+      total += common_letter[0].ord
+      if common_letter[0].ord >= 97
+        total -= SHIFT_LOWER
+      else
+        total -= SHIFT_UPPER
+      end
+    end
+    total
   end
 end
