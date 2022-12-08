@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'read_input'
+require 'pry-byebug'
 
 class Day2
   include ReadInput
@@ -38,7 +39,30 @@ class Day2
     end
     total_score
   end
-end
 
-d2 = Day2.new
-puts d2.part_one
+  def part_two
+    strategy_lines = parse_input('./inputs/day_2.txt')
+    total_score = 0
+    
+    strategy_lines.each do |line|
+      arr = line.split
+      total_score += case arr[1]
+        when 'Y'
+          DRAW_POINTS
+        when 'Z'
+          WIN_POINTS
+        else
+          LOSE_POINTS
+      end
+
+      total_score += if [['A', 'Y'], ['C', 'Z'], ['B','X']].include?(arr)
+        ROCK_POINTS
+      elsif [['C', 'X'], ['B', 'Y'], ['A', 'Z']].include?(arr)
+        PAPER_POINTS
+      else
+        SCISSORS_POINTS
+      end
+    end
+    total_score
+  end
+end
