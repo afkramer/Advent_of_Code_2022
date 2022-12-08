@@ -1,4 +1,4 @@
-require_relative 'lib/day_2.rb'
+require_relative 'lib/day_3.rb'
 
-d2 = Day2.new
-puts d2.part_two
+d = Day3.new
+puts d.part_one
